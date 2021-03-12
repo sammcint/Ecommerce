@@ -27,6 +27,12 @@ function Product({ product }) {
                     ${product.price}
 
                 </Card.Text>
+
+                <Card.Text as="div">
+                    <div classname="my-3">
+                        {product.description}
+                    </div>
+                </Card.Text>
             </Card.Body>
         </Card>
     )
