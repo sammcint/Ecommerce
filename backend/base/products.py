@@ -17,7 +17,7 @@ products = [
         'name': 'TSM Jacket',
         'image': '/images/TSM_Jacket.jpeg',
         'brand': 'TSM',
-        'description': 'Product color: Black. 100% Polyester. Authentic TSM Merch. Please allow up to 5 business days before shipping. ',
+        'description': 'Product color: Black. 100% Polyester. Authentic TSM Merch. Please allow up to 5 business days before shipping.',
         'category': 'Jackets',
         'price': 69.99,
         'countInStock': 1,
