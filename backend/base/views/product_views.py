@@ -15,6 +15,7 @@ from rest_framework import status
 
 
 
+
 @api_view(['GET'])
 def getProducts(request):
     user = request.user
