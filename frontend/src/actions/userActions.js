@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { PRODUCT_DETAILS_FAIL } from '../constants/productConstants'
 import {
     USER_LOGIN_REQUEST,
     USER_LOGIN_SUCCESS,
@@ -19,9 +18,9 @@ export const login = (email, password) => async (dispatch) => {
             }
         }
 
-        const {data} = await axios.post(
+        const { data } = await axios.post(
             '/api/users/login/',
-            {'username':email, 'password': password},
+            { 'username':email, 'password': password },
             config
             )
 
@@ -36,9 +35,14 @@ export const login = (email, password) => async (dispatch) => {
     } catch(error) {
         dispatch({
             type: USER_LOGIN_FAIL,
-            payload: error.response && error.response.data.PRODUCT_DETAILS_FAIL
+            payload: error.response && error.response.data.detail
                 ? error.response.data.detail
                 : error.message, 
         })
     }
+}
+
+export const logout = () => (dispatch) => {
+    localStorage.removeItem('userInfo')
+    dispatch({type:USER_LOGOUT})
 }
