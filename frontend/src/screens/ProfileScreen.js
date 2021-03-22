@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
@@ -64,8 +64,8 @@ function ProfileScreen({ history }) {
             <Col md={3}>
                 <h2>User Profile</h2>
                 {message && <Message variant='danger'>{message}</Message>}
-            {error && <Message variant='danger'>{error}</Message>}
-            {loading && <Loader />}
+                {error && <Message variant='danger'>{error}</Message>}
+                {loading && <Loader />}
             <Form onSubmit={submitHandler}> 
 
                 <Form.Group controlId='name'>
