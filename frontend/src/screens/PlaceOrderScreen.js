@@ -22,15 +22,15 @@ function PlaceOrderScreen({ history }) {
     cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2)
 
     //Currently have a bug with my shopping cart not grabbing the payment method 
-    //if(!cart.paymentMethod){
-    //    history.push('/payment')
+    if(!cart.paymentMethod){
+        history.push('/payment')
 
-    //}
+    }
 
     useEffect(() => {
         if (success) {
             history.push(`/order/${order._id}`)
-            dispatch({type: ORDER_CREATE_RESET})
+            dispatch({ type: ORDER_CREATE_RESET })
         }
     }, [success, history])
 
