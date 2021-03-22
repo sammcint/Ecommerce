@@ -29,7 +29,7 @@ function PlaceOrderScreen({ history }) {
     //}
 
     useEffect(() => {
-        if(success){
+        if (success) {
             history.push(`/order/${order._id}`)
             dispatch({type: ORDER_CREATE_RESET})
         }
