@@ -75,7 +75,7 @@ function LoginScreen({location, history}) {
             <Row className='py-3'>
                 <Col>
                 Forgot password? <Link 
-                    to={redirect ? `/forgotpassword?redirect=${redirect}` : '/forgotpassword'}>
+                    to={redirect ? `/reset_password` : '/reset_password'}>
                     Forgot password
                     </Link>
                 </Col>

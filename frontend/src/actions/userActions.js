@@ -10,6 +10,11 @@ import {
     USER_REGISTER_SUCCESS,
     USER_REGISTER_FAIL,
 
+    PASSWORD_RESET_FAIL,
+    PASSWORD_RESET_SUCCESS,
+    PASSWORD_RESET_CONFIRM_FAIL,
+    PASSWORD_RESET_CONFIRM_SUCCESS,
+
     USER_DETAILS_REQUEST,
     USER_DETAILS_SUCCESS,
     USER_DETAILS_FAIL, 
@@ -103,6 +108,62 @@ export const register = (name, email, password) => async (dispatch) => {
                 : error.message, 
         })
     }
+}
+
+export const reset_password = (email) => async dispatch => {
+    
+    const config = {
+        headers:{
+            'Content-type': 'application/json'
+        }
+    }    
+
+    const body = JSON.stringify({ email })
+
+    //this might have to be the same as line 84. probably does. 
+    try{
+        //await axios.post(`/auth/users/reset_password`, body, config)
+
+        const { data } = await axios.post(
+            '/api/users/reset_password/',
+            {'email':email, 'reset_password': reset_password },
+            config
+            )     
+        
+        dispatch({
+            type: PASSWORD_RESET_SUCCESS
+        })
+
+    } catch(error) {
+        dispatch({
+            type: PASSWORD_RESET_FAIL
+        })
+    }
+
+    
+}
+
+export const reset_password_confirm = (uid, token, new_password, re_new_password) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const body = JSON.stringify({ uid, token, new_password, re_new_password })
+
+    try{
+        await axios.post(`/auth/users/reset_password_confirm/`, body, config)
+
+        dispatch({
+            type: PASSWORD_RESET_CONFIRM_SUCCESS
+        })
+
+    } catch(error) {
+        dispatch({
+            type: PASSWORD_RESET_CONFIRM_FAIL
+        })
+    }
+
 }
 
 export const getUserDetails = (id) => async (dispatch, getState) => {

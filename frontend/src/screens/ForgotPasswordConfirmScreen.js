@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import FormContainer from '../components/FormContainer'
-import { reset_password } from '../actions/userActions'
+import { reset_password_confirm } from '../actions/userActions'
 
 //import  views  from 'django.contrib.auth' 
 
-function ResetPassword({ reset_password, location, history }) {
+function ResetPasswordConfirm({ location, history, match, reset_password_confirm }) {
 //function ResetPassword({reset_password}) {
     const [requestSent, setRequestSent] = useState(false)
-    const [email] = useState('')
+    const [new_password, re_new_password, setPassword ] = useState('')
 
 
     const dispatch = useDispatch()
@@ -26,35 +26,50 @@ function ResetPassword({ reset_password, location, history }) {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(reset_password(email))
+
+        const uid = match.params.uid
+        const token = match.params.token
+
+        reset_password_confirm(uid, token, new_password, re_new_password)
         setRequestSent(true)
     }
 
     useEffect(() => {
         //if (userInfo){
         if (requestSent){
-            history.push('/reset_password_confirm')
+            history.push(redirect)
         }
     //}, [history, userInfo, redirect])
     }, [history, requestSent, redirect])
 
     return (
         <FormContainer>
-            <h1>Password Reset</h1>
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
-                <Form.Group controlId='email'>
-                    <Form.Label>Email Address</Form.Label>
+            <Form.Group controlId='password'>
+                    <Form.Label>Password</Form.Label>
                     <Form.Control
-                        type='email'
-                        placeholder='Enter Email'
-                        value={email}
+                        type='password'
+                        name='new_password'
+                        placeholder='New Password'
+                        value={new_password}
+                        onChange={(e) => setPassword(e.target.value)}
                     >
                     </Form.Control>
                 </Form.Group>
 
-
+                <Form.Group controlId='password'>
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        type='password'
+                        name='re_new_password'
+                        placeholder='Confirm New Password'
+                        value={re_new_password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    >
+                    </Form.Control>
+                </Form.Group>
                 <Button type='submit' variant='primary'>
                     Reset Password
                 </Button>
@@ -63,4 +78,4 @@ function ResetPassword({ reset_password, location, history }) {
     )
 }
 
-export default ResetPassword
+export default ResetPasswordConfirm

@@ -19,12 +19,22 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static 
 
+from django.contrib.auth import views as auth_views
+#google allow less secure apps so it can send emails:
+#https://myaccount.google.com/lesssecureapps?pli=1&rapt=AEjHL4OsC0-0Q7eKLJYRvHDBkXBy-7z-07UQnZlyAnd-pV702Jvfj1Ur93fbsDbzcj5rTgQYoNM_EYhUUqhgFpRR3HoJWKH7Kw
+#Lucas will likely need to do this 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('api/', include('base.urls')), 
     path('api/products/', include('base.urls.product_urls')),
     path('api/users/', include('base.urls.user_urls')),
     path('api/order/', include('base.urls.order_urls')),
+    path('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
+    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
+    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(), name="password_reset_complete"),
 ]
 
 

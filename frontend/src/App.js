@@ -23,7 +23,7 @@ function App() {
         <Route path='/' component={HomeScreen} exact />
         <Route path='/login' component={LoginScreen} />
         <Route path='/register' component={RegisterScreen} />
-        <Route path='/forgotpassword' component={ForgotPasswordScreen} />
+        <Route path='/reset_password' component={ForgotPasswordScreen} />
         <Route path='/profile' component={ProfileScreen} />
         <Route path='/shipping' component={ShippingScreen} />
         <Route path='/placeorder' component={PlaceOrderScreen} />
