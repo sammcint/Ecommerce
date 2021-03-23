@@ -14,12 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from django.conf import settings
 from django.conf.urls.static import static 
 
 from django.contrib.auth import views as auth_views
+
+from django.views.generic import TemplateView
+
 #google allow less secure apps so it can send emails:
 #https://myaccount.google.com/lesssecureapps?pli=1&rapt=AEjHL4OsC0-0Q7eKLJYRvHDBkXBy-7z-07UQnZlyAnd-pV702Jvfj1Ur93fbsDbzcj5rTgQYoNM_EYhUUqhgFpRR3HoJWKH7Kw
 #Lucas will likely need to do this 
@@ -27,6 +30,8 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
     #path('api/', include('base.urls')), 
     path('api/products/', include('base.urls.product_urls')),
     path('api/users/', include('base.urls.user_urls')),
@@ -39,3 +44,5 @@ urlpatterns = [
 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]
