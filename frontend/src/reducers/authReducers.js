@@ -3,6 +3,9 @@ import {
     USER_LOGIN_SUCCESS,
     USER_LOGIN_FAIL,
 
+    USER_LOADED_SUCCESS,
+    USER_LOADED_FAIL,
+
     USER_DETAILS_SUCCESS,
     USER_DETAILS_FAIL, 
 
@@ -40,13 +43,13 @@ export default function AuthReducer(state = initialState, action) {
                 access: payload.access,
                 refresh: payload.refresh
             }
-        case USER_DETAILS_SUCCESS:
+        case USER_LOADED_SUCCESS:
             return{
                 ...state,
                 user: payload
             }
 
-        case USER_DETAILS_FAIL:
+        case USER_LOADED_FAIL:
             return{
                 ...state,
                 user: null

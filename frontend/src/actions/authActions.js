@@ -4,6 +4,9 @@ import {
     USER_LOGIN_SUCCESS,
     USER_LOGIN_FAIL,
 
+    USER_LOADED_SUCCESS,
+    USER_LOADED_FAIL,
+
     USER_DETAILS_REQUEST,
     USER_DETAILS_SUCCESS,
     USER_DETAILS_FAIL, 
@@ -15,38 +18,7 @@ import {
 } 
 from '../constants/userConstants'
 
-export const checkAuthenticated = () => async dispatch => {
-    if (localStorage.getItem('access')){
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        }
 
-        const body = JSON.stringify({ token: localStorage.getItem('access')})
-
-        try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/verify/`, body, config)
-            if (res.data.code !== 'token_not_valid') {
-
-            } else {
-                dispatch({
-                    type: USER_AUTHENTICATED_SUCCESS
-                    })                
-            }
-        } catch(err) {
-            dispatch({
-            type: USER_AUTHENTICATED_FAIL
-            })
-        }
-
-    } else {
-        dispatch ({
-            type: USER_AUTHENTICATED_FAIL
-        })
-    }
-}
 
 export const load_user = () => async dispatch => {
     if (localStorage.getItem('access')){
@@ -60,17 +32,17 @@ export const load_user = () => async dispatch => {
         try {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/users/me/`, config)
             dispatch({
-                type: USER_DETAILS_SUCCESS,
+                type: USER_LOADED_SUCCESS,
                 payload: res.data
             })
         } catch(err){
             dispatch({
-                type: USER_DETAILS_FAIL
+                type: USER_LOADED_FAIL
             })
         }
     } else {
         dispatch({
-            type: USER_DETAILS_FAIL
+            type: USER_LOADED_FAIL
         })       
     }
 }
@@ -142,4 +114,38 @@ export const logout = () => dispatch => {
     dispatch({
         type: USER_LOGOUT
     })
+}
+
+
+export const checkAuthenticated = () => async dispatch => {
+    if (localStorage.getItem('access')){
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }
+
+        const body = JSON.stringify({ token: localStorage.getItem('access')})
+
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/verify/`, body, config)
+            if (res.data.code !== 'token_not_valid') {
+
+            } else {
+                dispatch({
+                    type: USER_AUTHENTICATED_SUCCESS
+                    })                
+            }
+        } catch(err) {
+            dispatch({
+            type: USER_AUTHENTICATED_FAIL
+            })
+        }
+
+    } else {
+        dispatch ({
+            type: USER_AUTHENTICATED_FAIL
+        })
+    }
 }
