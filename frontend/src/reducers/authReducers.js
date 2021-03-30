@@ -11,8 +11,12 @@ import {
 
     USER_AUTHENTICATED_SUCCESS,
     USER_AUTHENTICATED_FAIL,
-    USER_LOGOUT
+    USER_LOGOUT,
 
+    PASSWORD_RESET_SUCCESS,
+    PASSWORD_RESET_FAIL,
+    PASSWORD_RESET_CONFIRM_SUCCESS,
+    PASSWORD_RESET_CONFIRM_FAIL
 } 
 from '../constants/userConstants'
 
@@ -25,7 +29,7 @@ const initialState = {
 }
 
 
-export default function AuthReducer(state = initialState, action) {
+export const authReducer = (state = initialState, action) => {
     const { type, payload } = action
 
     switch(type) {
@@ -70,15 +74,24 @@ export default function AuthReducer(state = initialState, action) {
                 isAuthenticated: false,
                 user: null
             }
+        case PASSWORD_RESET_SUCCESS:
+        case PASSWORD_RESET_FAIL:
+        case PASSWORD_RESET_CONFIRM_SUCCESS:
+        case PASSWORD_RESET_CONFIRM_FAIL:
+            return {
+                ...state
+            }
         default: 
             return state
     }
 }
 
 
-/*
 
-export const authReducer(state = {}, action) => {
+
+/*
+export const authReducer = (state = {}, action) => {
+    const { type, payload } = action
     switch(action.type) {
         case USER_LOGIN_SUCCESS:
             //localStorage.setItem('access', payload.access)

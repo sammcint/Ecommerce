@@ -14,6 +14,8 @@ function HomeScreen() {
     const productList = useSelector(state => state.productList)
     const {error, loading, products } = productList
 
+    //UseEffect gets triggered every time the component loads 
+    // or a State value/attribute gets updated
     useEffect(() => {
         dispatch(listProducts())
 

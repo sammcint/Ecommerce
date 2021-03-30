@@ -14,9 +14,50 @@ import {
     USER_AUTHENTICATED_SUCCESS,
     USER_AUTHENTICATED_FAIL,
 
+    PASSWORD_RESET_SUCCESS,
+    PASSWORD_RESET_FAIL,
+    PASSWORD_RESET_CONFIRM_SUCCESS,
+    PASSWORD_RESET_CONFIRM_FAIL,
+
     USER_LOGOUT
 } 
 from '../constants/userConstants'
+
+
+
+
+
+export const login = (email, password) => async dispatch => {
+    const config = {
+        headers:{
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const body = JSON.stringify({ email, password })
+    
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/create/`, body, config)
+        /*
+        const { data } = await axios.post(
+            '/api/users/login/',
+            { 'username':email, 'password': password },
+            config
+            )
+        //localStorage.setItem('userInfo', JSON.stringify(data))
+        */
+        dispatch({
+            type: USER_LOGIN_SUCCESS,
+            payload: res.data
+        })
+        dispatch(load_user())
+
+    } catch(err){
+        dispatch({
+            type: USER_LOGIN_FAIL
+        })
+    }
+}
 
 
 
@@ -48,28 +89,7 @@ export const load_user = () => async dispatch => {
 }
 
 
-export const login = (email, password) => async dispatch => {
-    const config = {
-        headers:{
-            'Content-Type': 'application/json'
-        }
-    }
 
-    const body = JSON.stringify({ email, password })
-    
-    try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/create/`, body, config)
-        dispatch({
-            type: USER_LOGIN_SUCCESS,
-            payload: res.data
-        })
-        dispatch(load_user())
-    } catch(err){
-        dispatch({
-            type: USER_LOGIN_FAIL
-        })
-    }
-}
 export const getUserDetails = (id) => async (dispatch, getState) => {
     try{
         dispatch({
@@ -110,11 +130,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 }
 
 
-export const logout = () => dispatch => {
-    dispatch({
-        type: USER_LOGOUT
-    })
-}
+
 
 
 export const checkAuthenticated = () => async dispatch => {
@@ -149,3 +165,54 @@ export const checkAuthenticated = () => async dispatch => {
         })
     }
 }
+
+export const reset_password = (email) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const body = JSON.stringify({ email })
+
+    try{
+        await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/reset_password/`, body, config)
+
+        dispatch({
+            type: PASSWORD_RESET_SUCCESS
+        })
+
+    } catch (err) {
+        dispatch({
+            type: PASSWORD_RESET_FAIL
+        })
+
+    }
+}
+
+export const reset_password_confirm = (uid, token, new_password, re_new_password) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const body = JSON.stringify({ uid, token, new_password, re_new_password })
+    try{
+        await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/reset_password_confirm/`, body, config)
+        dispatch({
+            type: PASSWORD_RESET_CONFIRM_SUCCESS
+        })
+    } catch (err) {
+        dispatch({
+            type: PASSWORD_RESET_CONFIRM_FAIL
+        })
+    }
+}
+
+export const logout = () => dispatch => {
+    dispatch({
+        type: USER_LOGOUT
+    })
+}
+

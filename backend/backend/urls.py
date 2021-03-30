@@ -23,6 +23,8 @@ from django.contrib.auth import views as auth_views
 
 from django.views.generic import TemplateView
 
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 #google allow less secure apps so it can send emails:
 #https://myaccount.google.com/lesssecureapps?pli=1&rapt=AEjHL4OsC0-0Q7eKLJYRvHDBkXBy-7z-07UQnZlyAnd-pV702Jvfj1Ur93fbsDbzcj5rTgQYoNM_EYhUUqhgFpRR3HoJWKH7Kw
 #Lucas will likely need to do this 
