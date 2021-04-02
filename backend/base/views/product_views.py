@@ -17,6 +17,7 @@ from rest_framework import status
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def getProducts(request):
     user = request.user
     products = Product.objects.all()

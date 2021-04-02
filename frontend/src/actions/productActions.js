@@ -9,11 +9,23 @@ import {
     PRODUCT_DETAILS_FAIL
 } from '../constants/productConstants'
 
-export const listProducts = () => async (dispatch) => {
+export const listProducts = () => async (dispatch, getState) => {
     try{
         dispatch({ type: PRODUCT_LIST_REQUEST })
+        console.log("=========")
 
-        const { data } = await axios.get('/api/products/')
+
+        const accessToken = localStorage.getItem('access')
+        console.log(23, accessToken)
+        const config = {
+            headers:{
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${accessToken}`
+            }
+        }
+        console.log(26, accessToken)
+
+        const { data } = await axios.get('/api/products/', config)
 
         dispatch({
             type:PRODUCT_LIST_SUCCESS,
