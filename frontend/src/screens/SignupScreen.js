@@ -6,18 +6,22 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import FormContainer from '../components/FormContainer'
 //import { login } from '../actions/userActions'
-import { login } from '../actions/authActions'
+import { signup } from '../actions/authActions'
 
-function LoginScreen({location, history}) {
+function SignupScreen({location, history}) {
+    const [accountCreated, setAccountCreated] = useState(false)
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [re_password, setRe_password] = useState('')
+
 
     const dispatch = useDispatch()
 
     const redirect = location.search ? location.search.split('=')[1] : '/'
 
-    const userLogin = useSelector(state => state.userLogin)
-    const { error, loading, userInfo } = userLogin
+    const userSignup = useSelector(state => state.userSignup)
+    const { error, loading, userInfo } = userSignup
 
     useEffect(() => {
         if (userInfo){
@@ -27,26 +31,42 @@ function LoginScreen({location, history}) {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(login(email, password))
+        if(password === re_password) {
+            dispatch(signup(name, email, password, re_password))
+            setAccountCreated(true)
+            accountCreated(true)
+        }
+
     }
 
+  
     return (
         <FormContainer>
-            <h1>Sign In</h1>
+            <h1>Sign Up</h1>
+            <p>Create Your Account</p>
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
+                <Form.Group controlId='name'>
+                    <Form.Label>Email Address</Form.Label>
+                    <Form.Control
+                        type='text'
+                        placeholder='Name'
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    >
+                    </Form.Control>
+                </Form.Group>
                 <Form.Group controlId='email'>
                     <Form.Label>Email Address</Form.Label>
                     <Form.Control
-                        type='email'
-                        placeholder='Enter Email'
+                        type='text'
+                        placeholder='Email*'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     >
                     </Form.Control>
                 </Form.Group>
-
                 <Form.Group controlId='password'>
                     <Form.Label>Password</Form.Label>
                     <Form.Control
@@ -58,35 +78,34 @@ function LoginScreen({location, history}) {
                     </Form.Control>
                 </Form.Group>
 
+                <Form.Group controlId='re_password'>
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        type='re_password'
+                        placeholder='Enter Password'
+                        value={re_password}
+                        onChange={(e) => setRe_password(e.target.value)}
+                    >
+                    </Form.Control>
+                </Form.Group>
                 <Button type='submit' variant='primary'>
-                    Sign In
+                    Register
                 </Button>
             </Form>
 
             <Row className='py-3'>
                 <Col>
-                New Customer? <Link 
-                    //to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-                    to={redirect ? `/signup?redirect=${redirect}` : '/signup'}>  
+                Already have an account? <Link 
+                    to={redirect ? `/login?redirect=${redirect}` : '/login'}>
                     Register
                     </Link>
                 </Col>
 
             </Row>
 
-            <Row className='py-3'>
-                <Col>
-                Forgot password? <Link 
-                    to= '/reset-password'>
-                    Reset password
-                    </Link>
-                </Col>
-
-            </Row>
 
         </FormContainer>
     )
 }
 
-export default LoginScreen
-
+export default SignupScreen

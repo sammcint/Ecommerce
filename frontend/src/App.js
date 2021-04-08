@@ -15,6 +15,7 @@ import PlaceOrderScreen from './screens/PlaceOrderScreen'
 import ResetPasswordScreen from './screens/ResetPasswordScreen'
 import ResetPasswordConfirmScreen from './screens/ResetPasswordConfirmScreen'
 import ActivateScreen from './screens/ActivateScreen'
+import SignupScreen from './screens/SignupScreen'
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
       <Container>
         <Route path='/' component={HomeScreen} exact />
         <Route path='/login' component={LoginScreen} />
+        <Route path='/signup' component={SignupScreen} /> 
         <Route path='/register' component={RegisterScreen} />
         <Route path='/activate/:uid/:token' component={ActivateScreen} />
         <Route path='/reset-password' component={ResetPasswordScreen} />

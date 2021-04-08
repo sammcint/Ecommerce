@@ -1,4 +1,10 @@
 import {
+    SIGNUP_SUCCESS,
+    SIGNUP_FAIL,
+    
+    ACTIVATION_SUCCESS,
+    ACTIVATION_FAIL,
+
 
     USER_LOGIN_SUCCESS,
     USER_LOGIN_FAIL,
@@ -47,6 +53,11 @@ export const authReducer = (state = initialState, action) => {
                 access: payload.access,
                 refresh: payload.refresh
             }
+        case SIGNUP_SUCCESS:
+            return {
+                ...state,
+                isAuthenticated: false
+            }
         case USER_LOADED_SUCCESS:
             return{
                 ...state,
@@ -64,6 +75,7 @@ export const authReducer = (state = initialState, action) => {
                 user: null
             }
         case USER_LOGIN_FAIL:
+        case SIGNUP_FAIL:
         case USER_LOGOUT:
             localStorage.removeItem('access')
             localStorage.removeItem('refresh')
@@ -78,6 +90,8 @@ export const authReducer = (state = initialState, action) => {
         case PASSWORD_RESET_FAIL:
         case PASSWORD_RESET_CONFIRM_SUCCESS:
         case PASSWORD_RESET_CONFIRM_FAIL:
+        case ACTIVATION_SUCCESS:
+        case ACTIVATION_FAIL:
             return {
                 ...state
             }
