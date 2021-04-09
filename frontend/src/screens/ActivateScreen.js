@@ -1,23 +1,27 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { verify } from '../actions/authActions'
-
+import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
 function Activate({ match }) {
     
-    const [verified] = useState(false)
+   // const [verified] = useState('')
 
     const dispatch = useDispatch()
 
-
+    const [verified, setVerified] = useState(false)
 
     const verify_account = (e) => {
         const uid = match.params.uid
         const token = match.params.token
 
         dispatch(verify(uid, token))
-        verified(true)
+        console.log("verified success")
+        setVerified(true)
     }
-
+    if (verified) {
+        return <Redirect to='/' />
+    }
     return (
         <div className='container'>
             <div 
@@ -33,6 +37,10 @@ function Activate({ match }) {
                 > 
                     Verify
                 </button>
+                <Link 
+                    to= ''>
+
+                    </Link>
             </div>
         </div>
     )
