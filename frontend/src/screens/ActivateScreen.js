@@ -4,7 +4,7 @@ import { verify } from '../actions/authActions'
 
 function Activate({ match }) {
     
-    const [verified] = useState('')
+    const [verified] = useState(false)
 
     const dispatch = useDispatch()
 

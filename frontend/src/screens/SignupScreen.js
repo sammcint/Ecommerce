@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
@@ -18,25 +18,22 @@ function SignupScreen({location, history}) {
 
     const dispatch = useDispatch()
 
-    const redirect = location.search ? location.search.split('=')[1] : '/'
+    //const redirect = location.search ? location.search.split('=')[1] : '/'
 
     const userSignup = useSelector(state => state.userSignup)
-    const { error, loading, userInfo } = userSignup
+    const { error, loading } = userSignup
 
-    useEffect(() => {
-        if (userInfo){
-            history.push(redirect)
-        }
-    }, [history, userInfo, redirect])
 
     const submitHandler = (e) => {
         e.preventDefault()
         if(password === re_password) {
             dispatch(signup(name, email, password, re_password))
             setAccountCreated(true)
-            accountCreated(true)
-        }
 
+        }
+        if (accountCreated) {
+            return <Redirect to='/login' />
+        }
     }
 
   
@@ -48,7 +45,7 @@ function SignupScreen({location, history}) {
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
                 <Form.Group controlId='name'>
-                    <Form.Label>Email Address</Form.Label>
+                    <Form.Label>Name</Form.Label>
                     <Form.Control
                         type='text'
                         placeholder='Name'
@@ -81,7 +78,7 @@ function SignupScreen({location, history}) {
                 <Form.Group controlId='re_password'>
                     <Form.Label>Password</Form.Label>
                     <Form.Control
-                        type='re_password'
+                        type='password'
                         placeholder='Enter Password'
                         value={re_password}
                         onChange={(e) => setRe_password(e.target.value)}
@@ -96,8 +93,8 @@ function SignupScreen({location, history}) {
             <Row className='py-3'>
                 <Col>
                 Already have an account? <Link 
-                    to={redirect ? `/login?redirect=${redirect}` : '/login'}>
-                    Register
+                    to={'/login?'}>
+                    Login
                     </Link>
                 </Col>
 

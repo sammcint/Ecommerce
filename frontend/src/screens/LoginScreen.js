@@ -67,8 +67,8 @@ function LoginScreen({location, history}) {
                 <Col>
                 New Customer? <Link 
                     //to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-                    to={redirect ? `/signup?redirect=${redirect}` : '/signup'}>  
-                    Register
+                    to={'/signup'}>
+                    Sign up
                     </Link>
                 </Col>
 

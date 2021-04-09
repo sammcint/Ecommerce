@@ -17,6 +17,7 @@ const reducer = combineReducers({
     userUpdateProfile: userUpdateProfileReducer,
     orderCreate:orderCreateReducer,
     authLogin: authReducer,
+    userSignup: authReducer,
 })
 
 
