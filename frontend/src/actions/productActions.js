@@ -24,12 +24,8 @@ export const listProducts = () => async (dispatch, getState) => {
             }
         }
         console.log(26, accessToken)
-        const body = JSON.stringify({ accessToken })
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/products/` , config, body)
 
-
-
-        //const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/create/`, body, config)
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/products/` , config)
 
 
         dispatch({
