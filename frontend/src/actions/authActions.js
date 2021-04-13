@@ -29,6 +29,7 @@ import {
 from '../constants/userConstants'
 
 
+
 export const signup = (name, email, password, re_password) => async dispatch => {
     const config = {
         headers:{
@@ -102,44 +103,51 @@ export const login = (email, password) => async dispatch => {
             type: USER_LOGIN_SUCCESS,
             payload: res.data
         })
-        dispatch(load_user())
+        //dispatch(load_user())
 
-    } catch(err){
+    } catch(error){
         dispatch({
-            type: USER_LOGIN_FAIL
+            type: USER_LOGIN_FAIL,
+            payload:error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
         })
     }
 }
 
-
-
-export const load_user = (email, password) => async dispatch => {
+export const checkAuthenticated = () => async dispatch => {
     if (localStorage.getItem('access')){
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `JWT ${localStorage.getItem('access')}`,
                 'Accept': 'application/json'
             }
         }
-        const body = JSON.stringify({ email, password })
+
+        const body = JSON.stringify({ token: localStorage.getItem('access')})
+
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/users/me/`, body, config)
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/verify/`, body, config)
+            if (res.data.code !== 'token_not_valid') {
+
+            } else {
+                dispatch({
+                    type: USER_AUTHENTICATED_SUCCESS
+                    })                
+            }
+        } catch(err) {
             dispatch({
-                type: USER_LOADED_SUCCESS,
-                payload: res.data
-            })
-        } catch(err){
-            dispatch({
-                type: USER_LOADED_FAIL
+            type: USER_AUTHENTICATED_FAIL
             })
         }
+
     } else {
-        dispatch({
-            type: USER_LOADED_FAIL
-        })       
+        dispatch ({
+            type: USER_AUTHENTICATED_FAIL
+        })
     }
 }
+
 
 
 
@@ -186,38 +194,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 
 
 
-export const checkAuthenticated = () => async dispatch => {
-    if (localStorage.getItem('access')){
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        }
 
-        const body = JSON.stringify({ token: localStorage.getItem('access')})
-
-        try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/verify/`, body, config)
-            if (res.data.code !== 'token_not_valid') {
-
-            } else {
-                dispatch({
-                    type: USER_AUTHENTICATED_SUCCESS
-                    })                
-            }
-        } catch(err) {
-            dispatch({
-            type: USER_AUTHENTICATED_FAIL
-            })
-        }
-
-    } else {
-        dispatch ({
-            type: USER_AUTHENTICATED_FAIL
-        })
-    }
-}
 
 export const reset_password = (email) => async dispatch => {
     const config = {

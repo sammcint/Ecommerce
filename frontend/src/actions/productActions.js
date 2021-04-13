@@ -20,12 +20,12 @@ export const listProducts = () => async (dispatch, getState) => {
         const config = {
             headers:{
                 'Content-type': 'application/json',
-                Authorization: `Bearer ${accessToken}`
+                'Authorization': `Token ${accessToken}`
             }
         }
         console.log(26, accessToken)
-
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/products/`, config)
+        const body = JSON.stringify({ accessToken })
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/products/` , config, body)
 
 
 
