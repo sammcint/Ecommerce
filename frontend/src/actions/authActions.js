@@ -53,9 +53,12 @@ export const signup = (name, email, password, re_password) => async dispatch => 
             payload: res.data
         })
 
-    } catch(err){
+    } catch(error){
         dispatch({
-            type: SIGNUP_FAIL
+            type: SIGNUP_FAIL,
+            payload:error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
         })
     }
 }
@@ -94,14 +97,7 @@ export const login = (email, password) => async dispatch => {
     
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/create/`, body, config)
-        /*
-        const { data } = await axios.post(
-            '/api/users/login/',
-            { 'username':email, 'password': password },
-            config
-            )
-        //localStorage.setItem('userInfo', JSON.stringify(data))
-        */
+
         dispatch({
             type: USER_LOGIN_SUCCESS,
             payload: res.data
@@ -117,7 +113,7 @@ export const login = (email, password) => async dispatch => {
 
 
 
-export const load_user = () => async dispatch => {
+export const load_user = (email, password) => async dispatch => {
     if (localStorage.getItem('access')){
         const config = {
             headers: {
@@ -126,8 +122,9 @@ export const load_user = () => async dispatch => {
                 'Accept': 'application/json'
             }
         }
+        const body = JSON.stringify({ email, password })
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/users/me/`, config)
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/users/me/`, body, config)
             dispatch({
                 type: USER_LOADED_SUCCESS,
                 payload: res.data

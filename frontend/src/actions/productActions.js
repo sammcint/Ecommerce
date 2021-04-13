@@ -14,7 +14,7 @@ export const listProducts = () => async (dispatch, getState) => {
         dispatch({ type: PRODUCT_LIST_REQUEST })
         console.log("=========")
 
-
+        
         const accessToken = localStorage.getItem('access')
         console.log(23, accessToken)
         const config = {
@@ -25,7 +25,12 @@ export const listProducts = () => async (dispatch, getState) => {
         }
         console.log(26, accessToken)
 
-        const { data } = await axios.get('/api/products/', config)
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/products/`, config)
+
+
+
+        //const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/create/`, body, config)
+
 
         dispatch({
             type:PRODUCT_LIST_SUCCESS,

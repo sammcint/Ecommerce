@@ -14,7 +14,7 @@ function SignupScreen({location, history}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [re_password, setRe_password] = useState('')
-
+    const [message, setMessage] = useState('')
 
     const dispatch = useDispatch()
 
@@ -26,6 +26,10 @@ function SignupScreen({location, history}) {
 
     const submitHandler = (e) => {
         e.preventDefault()
+
+        if(password !== re_password){
+            setMessage('Passwords do not match')
+        }
         if(password === re_password) {
             dispatch(signup(name, email, password, re_password))
             setAccountCreated(true)
@@ -36,11 +40,14 @@ function SignupScreen({location, history}) {
         }
     }
 
-  
+
+
+    
     return (
         <FormContainer>
             <h1>Sign Up</h1>
             <p>Create Your Account</p>
+            {message && <Message variant='danger'>{message}</Message>}
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
