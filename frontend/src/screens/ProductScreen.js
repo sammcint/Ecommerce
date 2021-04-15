@@ -113,6 +113,7 @@ function ProductScreen({ match, history }) {
 
             <Row>
                 <Col md={6}>
+                    
                     <Image src={product.image} alt={product.name} fluid />
                 </Col>
                 <Col md={3}>
