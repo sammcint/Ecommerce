@@ -45,6 +45,7 @@ export const load_user = () => async dispatch => {
                 type: USER_LOADED_SUCCESS,
                 payload: res.data
             });
+            
         } catch (err) {
             dispatch({
                 type: USER_LOADED_FAIL
@@ -130,8 +131,8 @@ export const login = (email, password) => async dispatch => {
             type: USER_LOGIN_SUCCESS,
             payload: res.data
         })
-        //dispatch(load_user())
-
+        
+    localStorage.setItem('userInfo', body)
     } catch(error){
         dispatch({
             type: USER_LOGIN_FAIL,

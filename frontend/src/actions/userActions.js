@@ -30,7 +30,8 @@ export const login = (email, password) => async (dispatch) => {
 
         const config = {
             headers:{
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
             }
         }
 
@@ -111,22 +112,20 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
             type: USER_DETAILS_REQUEST
         })
 
-        const {
-            userLogin: { userInfo },
-         } = getState()
-
+        const accessToken = localStorage.getItem('access')
+        console.log(30, accessToken)
         const config = {
             headers:{
                 'Content-type': 'application/json',
-                Authorization: `Bearer ${userInfo.token}`
+                'Authorization': `Token ${accessToken}`
             }
         }
+        console.log(35, accessToken)
 
-        const { data } = await axios.get(
-            `/api/users/${id}/`,
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/users/${id}/`,
             config
             )
-
+        localStorage.setItem('userInfo', JSON.stringify(data))
         dispatch({
             type: USER_DETAILS_SUCCESS,
             payload:data
