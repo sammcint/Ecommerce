@@ -20,7 +20,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
             type: ORDER_CREATE_REQUEST
         })
 
-
+         console.log(35, order)
          const accessToken = localStorage.getItem('access')
          console.log(23, accessToken)
          const config = {
@@ -31,26 +31,9 @@ export const createOrder = (order) => async (dispatch, getState) => {
          }
          const { data } = await axios.post(
             `${process.env.REACT_APP_API_URL}/api/orders/add/`,
-            config, order
+            order, config
             )
-         /*
-         const {
-            userLogin: { userInfo },
-         } = getState()
-        console.log(26, accessToken)
-        const config = {
-            headers:{
-                'Content-type': 'application/json',
-                Authorization: `Bearer ${userInfo.token}`
-            }
-        }
-        
-        const { data } = await axios.post(
-            '/api/order/add/',
-            order,
-            config
-            )
-            */
+
         dispatch({
             type: ORDER_CREATE_SUCCESS,
             payload:data

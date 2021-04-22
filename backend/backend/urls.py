@@ -38,7 +38,7 @@ urlpatterns = [
     #path('api/', include('base.urls')), 
     path('api/products/', include('base.urls.product_urls')),
     path('api/users/', include('base.urls.user_urls')),
-    path('api/order/', include('base.urls.order_urls')),
+    path('api/orders/', include('base.urls.order_urls')),
     path('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
