@@ -1,7 +1,12 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Product, Order, OrderItem, ShippingAddress
+
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
@@ -9,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
     isAdmin = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = User
-        fields = ['id', '_id', 'username', 'email', 'name', 'isAdmin']
+        fields = ['id', '_id', 'name', 'email', 'name', 'isAdmin']
 
     def get__id(self, obj):
         return obj.id
@@ -18,7 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
         return obj.is_staff
 
     def get_name(self, obj):
-        name = obj.first_name 
+        name = obj.name 
         if name == '':
             name = obj.email
 
@@ -28,8 +33,8 @@ class UserSerializerWithToken(UserSerializer):
     token = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = User
-        fields = ['id', '_id', 'username', 'email', 'name', 'isAdmin', 'token']
-
+        fields = ['id', '_id', 'name', 'email', 'name', 'isAdmin', 'token']
+#        fields = ['id', '_id', 'email', 'name', 'isAdmin', 'token']
     def get_token(self,obj):
         token = RefreshToken.for_user(obj)
         return str(token.access_token)
@@ -72,8 +77,9 @@ class OrderSerializer(serializers.ModelSerializer):
         except:
             address = False
         return address
-
+    
     def get_user(self, obj):
         user = obj.user
         serializer = UserSerializer(user, many=False)
         return serializer.data      
+    

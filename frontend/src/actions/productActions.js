@@ -20,7 +20,7 @@ export const listProducts = () => async (dispatch, getState) => {
         const config = {
             headers:{
                 'Content-type': 'application/json',
-                'Authorization': `Token ${accessToken}`
+                'Authorization': `Bearer ${accessToken}`
             }
         }
         console.log(26, accessToken)

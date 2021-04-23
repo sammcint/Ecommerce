@@ -26,7 +26,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
          const config = {
              headers:{
                  'Content-type': 'application/json',
-                 'Authorization': `Token ${accessToken}`
+                 'Authorization': `Bearer ${accessToken}`
              }
          }
          const { data } = await axios.post(
