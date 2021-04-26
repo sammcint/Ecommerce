@@ -178,13 +178,14 @@ export const checkAuthenticated = () => async dispatch => {
 
 
 
-
+/*
 export const getUserDetails = (id) => async (dispatch, getState) => {
     try{
         dispatch({
             type: USER_DETAILS_REQUEST
         })
-
+        const accessToken = localStorage.getItem('access')
+        console.log(43, accessToken)
         const {
             userLogin: { userInfo },
          } = getState()
@@ -192,7 +193,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         const config = {
             headers:{
                 'Content-type': 'application/json',
-                Authorization: `Bearer ${userInfo.token}`
+                'Authorization': `Bearer ${accessToken}`
             }
         }
 
@@ -218,7 +219,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     }
 }
 
-
+*/
 
 
 

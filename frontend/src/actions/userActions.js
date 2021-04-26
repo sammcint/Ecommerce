@@ -117,7 +117,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         const config = {
             headers:{
                 'Content-type': 'application/json',
-                'Authorization': `Token ${accessToken}`
+                'Authorization': `Bearer ${accessToken}`
             }
         }
         console.log(35, accessToken)

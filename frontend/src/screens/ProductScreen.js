@@ -66,7 +66,7 @@ function ProductScreen({ match, history }) {
 
                             <ListGroup.Item>
                                 <Row>
-                                    <Col>Price:</Col>
+                                    <Col>Status:</Col>
                                     <Col>
                                         {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
                                     </Col>
