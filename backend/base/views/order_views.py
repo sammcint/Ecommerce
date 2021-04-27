@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from base.models import Product, Order, OrderItem, ShippingAddress
 from base.serializers import ProductSerializer, OrderSerializer
 
-
+from datetime import datetime
 
 from rest_framework import status
 
@@ -84,3 +84,13 @@ def getOrderById(request, pk):
         return Response({'detail':'Order does not exist'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def updateOrderToPaid(request, pk):
+    order = Order.objects.get(_id=pk)
+
+    order.isPaid = True 
+    order.paidAt = datetime.now()
+    order.save()
+
+    return Response('Order was paid')
