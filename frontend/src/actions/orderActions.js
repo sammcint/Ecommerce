@@ -69,7 +69,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
          const config = {
              headers:{
                  'Content-type': 'application/json',
-                 'Authorization': `Token ${accessToken}`
+                 'Authorization': `Bearer ${accessToken}`
              }
          }
          const { data } = await axios.get(
