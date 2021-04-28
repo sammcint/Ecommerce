@@ -269,9 +269,13 @@ export const reset_password_confirm = (uid, token, new_password, re_new_password
     }
 }
 
+/*
+the log out is coming from useractions but i lost my user profile once i got rid of this? Doesnt make sense, need to look into 
+*/
 export const logout = () => dispatch => {
     dispatch({
         type: USER_LOGOUT
     })
 }
+
 
