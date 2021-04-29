@@ -178,7 +178,7 @@ export const checkAuthenticated = () => async dispatch => {
 
 
 
-/*
+
 export const getUserDetails = (id) => async (dispatch, getState) => {
     try{
         dispatch({
@@ -186,10 +186,11 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         })
         const accessToken = localStorage.getItem('access')
         console.log(43, accessToken)
+        /*
         const {
             userLogin: { userInfo },
          } = getState()
-
+         */
         const config = {
             headers:{
                 'Content-type': 'application/json',
@@ -201,7 +202,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
             `/api/users/${id}/`,
             config
             )
-
+        localStorage.setItem('userInfo', JSON.stringify(data))
         dispatch({
             type: USER_DETAILS_SUCCESS,
             payload:data
@@ -219,7 +220,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     }
 }
 
-*/
+
 
 
 

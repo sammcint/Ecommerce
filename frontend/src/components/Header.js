@@ -10,6 +10,11 @@ function Header() {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
+    //console.log(60, userInfo.name)
+
+    //const userDetails = useSelector(state => state.userDetails)
+    //const {userInfo2 } = userDetails
+
     const dispatch = useDispatch() 
 
     const logoutHandler = () =>{
@@ -32,7 +37,7 @@ function Header() {
                     </LinkContainer>
                     
                     {userInfo ? (
-                        <NavDropdown title={userInfo.name} id='username'> 
+                        <NavDropdown title={userInfo.name} id='name'> 
                             <LinkContainer to='/profile'>
                                 <NavDropdown.Item>Pofile</NavDropdown.Item>
                             </LinkContainer>
@@ -44,8 +49,24 @@ function Header() {
                         <LinkContainer to='/login'>
                         <Nav.Link><i className="fas fa-user"></i>Login</Nav.Link>
                         </LinkContainer>
-                    )
-                    }
+                    )}
+
+                    {userInfo && userInfo.isAdmin && (
+                        <NavDropdown title='Admin' id='adminmenu'> 
+                        <LinkContainer to='/admin/userlist'>
+                            <NavDropdown.Item>Users</NavDropdown.Item>
+                        </LinkContainer>
+
+                        <LinkContainer to='/admin/productlist'>
+                            <NavDropdown.Item>Products</NavDropdown.Item>
+                        </LinkContainer>
+
+                        <LinkContainer to='/admin/orderlist'>
+                            <NavDropdown.Item>Orders</NavDropdown.Item>
+                        </LinkContainer>
+                           
+                    </NavDropdown>                        
+                    )}
 
 
                     

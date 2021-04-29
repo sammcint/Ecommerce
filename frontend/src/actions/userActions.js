@@ -19,11 +19,17 @@ import {
     USER_UPDATE_PROFILE_SUCCESS,
     USER_UPDATE_PROFILE_FAIL, 
 
+    USER_LIST_REQUEST,
+    USER_LIST_SUCCESS,
+    USER_LIST_FAIL, 
+    USER_LIST_RESET,
+
 
 } from '../constants/userConstants'
 
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
-
+/*
+login is really coming from authActions
 export const login = (email, password) => async (dispatch) => {
     try{
         dispatch({
@@ -60,12 +66,13 @@ export const login = (email, password) => async (dispatch) => {
         })
     }
 }
-
+*/
 export const logout = () => (dispatch) => {
     localStorage.removeItem('userInfo')
     dispatch({ type: USER_LOGOUT })
     dispatch({ type: USER_DETAILS_RESET })
     dispatch({ type: ORDER_LIST_MY_RESET })
+    dispatch({ type: USER_LIST_RESET })
 }
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -109,6 +116,8 @@ export const register = (name, email, password) => async (dispatch) => {
     }
 }
 
+/*
+try and get it from auth actions instead
 export const getUserDetails = (id) => async (dispatch, getState) => {
     try{
         dispatch({
@@ -145,7 +154,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         })
     }
 }
-
+*/
 
 export const updateUserProfile = (user) => async (dispatch, getState) => {
     try{
@@ -192,4 +201,42 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     }
 }
 
+export const listUsers = () => async (dispatch, getState) => {
+    try{
+        dispatch({
+            type: USER_LIST_REQUEST
+        })
 
+        //Might not need these lines of code 208-210 here, or anywhere else asking for credentials
+        const {
+            userLogin: { userInfo },
+         } = getState()
+
+         const accessToken = localStorage.getItem('access')
+         console.log(30, accessToken)
+         const config = {
+             headers:{
+                 'Content-type': 'application/json',
+                 'Authorization': `Bearer ${accessToken}`
+             }
+         }
+
+        const { data } = await axios.get(
+            `${process.env.REACT_APP_API_URL}/api/users/`,
+            config
+            )
+
+        dispatch({
+            type: USER_LIST_SUCCESS,
+            payload:data
+        })
+
+    } catch(error) {
+        dispatch({
+            type: USER_LIST_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message, 
+        })
+    }
+}

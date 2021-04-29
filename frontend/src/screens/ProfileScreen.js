@@ -5,8 +5,8 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import { getUserDetails, updateUserProfile } from '../actions/userActions'
-//import { getUserDetails } from '../actions/authActions' // try and keep USER_DETAILS to only user actions
+import {  updateUserProfile } from '../actions/userActions'
+import { getUserDetails } from '../actions/authActions' // try and keep USER_DETAILS to only user actions
 import { USER_UPDATE_PROFILE_RESET} from '../constants/userConstants'
 import { listMyOrders } from '../actions/orderActions'
 
