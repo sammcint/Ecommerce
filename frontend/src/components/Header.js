@@ -7,13 +7,16 @@ import { logout } from '../actions/userActions'
 
 function Header() {
 
+    //When I comment this out, then try AuthLogin below, then comment this back in, it works. 
+    //need to figure out how to get AuthLogin to work. 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-    //console.log(60, userInfo.name)
-
-    //const userDetails = useSelector(state => state.userDetails)
-    //const {userInfo2 } = userDetails
+    //trying something new
+    //i think the issue is because if you search userLogin, its defined in both user and auth actions. should probably just be auth 
+    //const authLogin = useSelector(state => state.authLogin)
+    //const { userInfo } = authLogin
+    console.log(70, userInfo)
 
     const dispatch = useDispatch() 
 
