@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# pycache files
+backend/backend/__pycache__/settings.cpython-38.pyc
