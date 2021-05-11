@@ -5,6 +5,12 @@
 /.pnp
 .pnp.js
 
+#one of these i think this is actually the way to ignore the node_modules?
+#i think it is this first one:
+frontend/node_modules
+#/frontend/node_modules/
+#/node_modules/
+
 # testing
 /coverage
 

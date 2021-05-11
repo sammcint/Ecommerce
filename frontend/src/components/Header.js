@@ -14,9 +14,10 @@ function Header() {
 
     //trying something new
     //i think the issue is because if you search userLogin, its defined in both user and auth actions. should probably just be auth 
-    //const authLogin = useSelector(state => state.authLogin)
-    //const { userInfo } = authLogin
-    console.log(70, userInfo)
+    const authLogin = useSelector(state => state.authLogin)
+    const { authInfo } = authLogin
+    console.log(77, userInfo)
+    console.log(78, authInfo)
 
     const dispatch = useDispatch() 
 
@@ -40,7 +41,7 @@ function Header() {
                     </LinkContainer>
                     
                     {userInfo ? (
-                        <NavDropdown title={userInfo.name} id='name'> 
+                        <NavDropdown title={userInfo.email} id='name'> 
                             <LinkContainer to='/profile'>
                                 <NavDropdown.Item>Pofile</NavDropdown.Item>
                             </LinkContainer>
