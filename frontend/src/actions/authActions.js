@@ -178,7 +178,7 @@ export const checkAuthenticated = () => async dispatch => {
 
 
 
-
+//might not need this becaue making same api call as regular user details?
 export const getAuthUserDetails = (id) => async (dispatch, getState) => {
     try{
         dispatch({
