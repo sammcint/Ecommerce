@@ -6,15 +6,15 @@ import {
     ACTIVATION_SUCCESS,
     ACTIVATION_FAIL,
 
-    USER_LOGIN_SUCCESS,
-    USER_LOGIN_FAIL,
+    AUTH_USER_LOGIN_SUCCESS,
+    AUTH_USER_LOGIN_FAIL,
 
-    USER_LOADED_SUCCESS,
-    USER_LOADED_FAIL,
+    AUTH_USER_LOADED_SUCCESS,
+    AUTH_USER_LOADED_FAIL,
 
-    USER_DETAILS_REQUEST,
-    USER_DETAILS_SUCCESS,
-    USER_DETAILS_FAIL, 
+    AUTH_USER_DETAILS_REQUEST,
+    AUTH_USER_DETAILS_SUCCESS,
+    AUTH_USER_DETAILS_FAIL, 
 
     USER_AUTHENTICATED_SUCCESS,
     USER_AUTHENTICATED_FAIL,
@@ -24,7 +24,7 @@ import {
     PASSWORD_RESET_CONFIRM_SUCCESS,
     PASSWORD_RESET_CONFIRM_FAIL,
 
-    USER_LOGOUT
+    AUTH_USER_LOGOUT
 } 
 from '../constants/userConstants'
 
@@ -42,18 +42,18 @@ export const load_user = () => async dispatch => {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/users/me/`, config);
     
             dispatch({
-                type: USER_LOADED_SUCCESS,
+                type: AUTH_USER_LOADED_SUCCESS,
                 payload: res.data
             });
             
         } catch (err) {
             dispatch({
-                type: USER_LOADED_FAIL
+                type: AUTH_USER_LOADED_FAIL
             });
         }
     } else {
         dispatch({
-            type: USER_LOADED_FAIL
+            type: AUTH_USER_LOADED_FAIL
         });
     }
 };
@@ -115,7 +115,7 @@ export const verify = (uid, token) => async dispatch =>{
     }    
 }
 
-export const login = (email, password) => async dispatch => {
+export const authLogin = (email, password) => async dispatch => {
     const config = {
         headers:{
             'Content-Type': 'application/json'
@@ -128,14 +128,14 @@ export const login = (email, password) => async dispatch => {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/create/`, body, config)
 
         dispatch({
-            type: USER_LOGIN_SUCCESS,
+            type: AUTH_USER_LOGIN_SUCCESS,
             payload: res.data
         })
         
-    localStorage.setItem('userInfo', body)
+    localStorage.setItem('authUserInfo', body)
     } catch(error){
         dispatch({
-            type: USER_LOGIN_FAIL,
+            type: AUTH_USER_LOGIN_FAIL,
             payload:error.response && error.response.data.message
             ? error.response.data.message
             : error.message,
@@ -179,18 +179,18 @@ export const checkAuthenticated = () => async dispatch => {
 
 
 
-export const getUserDetails = (id) => async (dispatch, getState) => {
+export const getAuthUserDetails = (id) => async (dispatch, getState) => {
     try{
         dispatch({
-            type: USER_DETAILS_REQUEST
+            type: AUTH_USER_DETAILS_REQUEST
         })
         const accessToken = localStorage.getItem('access')
         console.log(43, accessToken)
-        /*
+        
         const {
-            userLogin: { userInfo },
+            authLogin: { authUserInfo },
          } = getState()
-         */
+         
         const config = {
             headers:{
                 'Content-type': 'application/json',
@@ -202,9 +202,9 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
             `/api/users/${id}/`,
             config
             )
-        localStorage.setItem('userInfo', JSON.stringify(data))
+        localStorage.setItem(authUserInfo, JSON.stringify(data))
         dispatch({
-            type: USER_DETAILS_SUCCESS,
+            type: AUTH_USER_DETAILS_SUCCESS,
             payload:data
         })
 
@@ -212,7 +212,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 
     } catch(error) {
         dispatch({
-            type: USER_DETAILS_FAIL,
+            type: AUTH_USER_DETAILS_FAIL,
             payload: error.response && error.response.data.detail
                 ? error.response.data.detail
                 : error.message, 
@@ -273,9 +273,10 @@ export const reset_password_confirm = (uid, token, new_password, re_new_password
 /*
 the log out is coming from useractions but i lost my user profile once i got rid of this? Doesnt make sense, need to look into 
 */
-export const logout = () => dispatch => {
+export const authLogout = () => dispatch => {
+    localStorage.removeItem('authUserInfo')
     dispatch({
-        type: USER_LOGOUT
+        type: AUTH_USER_LOGOUT
     })
 }
 

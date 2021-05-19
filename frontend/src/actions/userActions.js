@@ -35,8 +35,8 @@ import {
 } from '../constants/userConstants'
 
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
-/*
-login is really coming from authActions
+
+
 export const login = (email, password) => async (dispatch) => {
     try{
         dispatch({
@@ -51,8 +51,8 @@ export const login = (email, password) => async (dispatch) => {
         }
 
         const { data } = await axios.post(
-            '/api/users/login/',
-            { 'username':email, 'password': password },
+            (`${process.env.REACT_APP_API_URL}/api/users/login/`),
+            { 'email':email, 'password': password },
             config
             )
 
@@ -73,7 +73,7 @@ export const login = (email, password) => async (dispatch) => {
         })
     }
 }
-*/
+
 export const logout = () => (dispatch) => {
     localStorage.removeItem('userInfo')
     dispatch({ type: USER_LOGOUT })
@@ -123,8 +123,8 @@ export const register = (name, email, password) => async (dispatch) => {
     }
 }
 
-/*
-try and get it from auth actions instead
+
+
 export const getUserDetails = (id) => async (dispatch, getState) => {
     try{
         dispatch({
@@ -161,27 +161,30 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         })
     }
 }
-*/
 
+
+//this isn't working, wrong token type. 
 export const updateUserProfile = (user) => async (dispatch, getState) => {
+    console.log(80, user)
     try{
         dispatch({
             type: USER_UPDATE_PROFILE_REQUEST
         })
-
+        //think i need to change this to ge the same as the products action call 
         const {
             userLogin: { userInfo },
          } = getState()
-
+        const accessToken = localStorage.getItem('access')
+        console.log(79, accessToken)
         const config = {
             headers:{
                 'Content-type': 'application/json',
-                Authorization: `Bearer ${userInfo.token}`
+                'Authorization': `Bearer ${accessToken}`
             }
         }
 
         const { data } = await axios.put(
-            `/api/users/profile/update/`,
+            `${process.env.REACT_APP_API_URL}/api/users/profile/update/`,
             user,
             config
             )
@@ -196,7 +199,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
             payload:data
         })        
 
-        localStorage.setItem('userInfo', JSON.stringify(data))
+        localStorage.setItem(userInfo, JSON.stringify(data))
 
     } catch(error) {
         dispatch({
@@ -220,6 +223,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
          } = getState()
 
          const accessToken = localStorage.getItem('access')
+         
 
          const config = {
              headers:{

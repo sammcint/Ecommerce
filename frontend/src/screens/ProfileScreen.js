@@ -5,8 +5,8 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import {  updateUserProfile } from '../actions/userActions'
-import { getUserDetails } from '../actions/authActions' // try and keep USER_DETAILS to only user actions
+import {  updateUserProfile, getUserDetails } from '../actions/userActions'
+import { getAuthUserDetails } from '../actions/authActions' // try and keep USER_DETAILS to only user actions
 import { USER_UPDATE_PROFILE_RESET} from '../constants/userConstants'
 import { listMyOrders } from '../actions/orderActions'
 
@@ -25,6 +25,9 @@ function ProfileScreen({ history }) {
     const userDetails = useSelector(state => state.userDetails)
     const { error, loading, user } = userDetails
 
+    const authUserDetails = useSelector(state => state.authUserDetails)
+    const { authError, authLoading, authUser } = authUserDetails
+
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
@@ -41,6 +44,7 @@ function ProfileScreen({ history }) {
             if (!user || !user.name || success || userInfo._id !== user._id) {
                 dispatch({ type:USER_UPDATE_PROFILE_RESET })
                 dispatch(getUserDetails('profile'))
+                dispatch(getAuthUserDetails('profile'))
                 dispatch(listMyOrders())
             }else{
                 setName(user.name)

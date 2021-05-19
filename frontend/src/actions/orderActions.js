@@ -32,7 +32,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
 
          console.log(35, order)
          const accessToken = localStorage.getItem('access')
-         console.log(23, accessToken)
+         console.log(24, accessToken)
          const config = {
              headers:{
                  'Content-type': 'application/json',

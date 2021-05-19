@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import FormContainer from '../components/FormContainer'
-//import { login } from '../actions/userActions'
-import { login } from '../actions/authActions'
+import { login } from '../actions/userActions'
+import { authLogin } from '../actions/authActions'
 
 function LoginScreen({location, history}) {
     const [email, setEmail] = useState('')
@@ -19,15 +19,19 @@ function LoginScreen({location, history}) {
     const userLogin = useSelector(state => state.userLogin)
     const { error, loading, userInfo } = userLogin
 
+    const authUserLogin = useSelector(state => state.authUserLogin)
+    const {  authUserInfo } = authUserLogin
+      
     useEffect(() => {
-        if (userInfo){
+        if (userInfo || authUserInfo){
             history.push(redirect)
         }
-    }, [history, userInfo, redirect])
+    }, [history, userInfo, authUserInfo, redirect])
 
     const submitHandler = (e) => {
         e.preventDefault()
         dispatch(login(email, password))
+        dispatch(authLogin(email,password))
     }
 
     return (

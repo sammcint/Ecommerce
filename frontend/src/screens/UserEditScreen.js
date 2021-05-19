@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import FormContainer from '../components/FormContainer'
-import { getUserDetails } from '../actions/authActions'
+import { getAuthUserDetails } from '../actions/authActions'
 import { updateUser } from '../actions/userActions'
 import { USER_UPDATE_RESET } from '../constants/userConstants'
 
@@ -19,8 +19,8 @@ function EditUserScreen({ match, history }) {
 
     const dispatch = useDispatch()
 
-    const userDetails = useSelector(state => state.userDetails)
-    const { error, loading, user } = userDetails
+    const authUserDetails = useSelector(state => state.authUserDetails)
+    const { error, loading, user } = authUserDetails
 
     const userUpdate = useSelector(state => state.userUpdate)
     const { error: errorUpdate, loading: loadingUpdate, success: successUpdate } = userUpdate
@@ -34,7 +34,7 @@ function EditUserScreen({ match, history }) {
         } else {
 
             if(!user.name || user._id !== Number(userId)){
-                dispatch(getUserDetails(userId))
+                dispatch(getAuthUserDetails(userId))
             } else {
                 setName(user.name)
                 setEmail(user.email)

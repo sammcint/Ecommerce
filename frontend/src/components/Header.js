@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Navbar, NavDropdown, Nav, Container } from "react-bootstrap";
 import { LinkContainer } from 'react-router-bootstrap'
 import { logout } from '../actions/userActions'
+import { authLogout } from '../actions/authActions'
 
 
 function Header() {
@@ -14,15 +15,16 @@ function Header() {
 
     //trying something new
     //i think the issue is because if you search userLogin, its defined in both user and auth actions. should probably just be auth 
-    const authLogin = useSelector(state => state.authLogin)
-    const { authInfo } = authLogin
+    const authUserLogin = useSelector(state => state.authUserLogin)
+    const { authUserInfo } = authUserLogin
     console.log(77, userInfo)
-    console.log(78, authInfo)
+    console.log(78, authUserInfo)
 
     const dispatch = useDispatch() 
 
     const logoutHandler = () =>{
         dispatch(logout()) 
+        dispatch(authLogout()) 
     }
 
     return (

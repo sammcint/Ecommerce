@@ -6,18 +6,18 @@ import {
     ACTIVATION_FAIL,
 
 
-    USER_LOGIN_SUCCESS,
-    USER_LOGIN_FAIL,
+    AUTH_USER_LOGIN_SUCCESS,
+    AUTH_USER_LOGIN_FAIL,
 
-    USER_LOADED_SUCCESS,
-    USER_LOADED_FAIL,
+    AUTH_USER_LOADED_SUCCESS,
+    AUTH_USER_LOADED_FAIL,
 
-    USER_DETAILS_SUCCESS,
-    USER_DETAILS_FAIL, 
+    AUTH_USER_DETAILS_SUCCESS,
+    AUTH_USER_DETAILS_FAIL, 
 
     USER_AUTHENTICATED_SUCCESS,
     USER_AUTHENTICATED_FAIL,
-    USER_LOGOUT,
+    AUTH_USER_LOGOUT,
 
     PASSWORD_RESET_SUCCESS,
     PASSWORD_RESET_FAIL,
@@ -45,7 +45,16 @@ export const authReducer = (state = initialState, action) => {
                 isAuthenticated: true
             }
            // return { loading:true }
-        case USER_LOGIN_SUCCESS:
+        case AUTH_USER_LOGIN_SUCCESS:
+            localStorage.setItem('access', payload.access)
+            return{
+                ...state,
+                isAuthenticated: true,
+                access: payload.access,
+                refresh: payload.refresh,
+                user: payload.data
+            }
+        case AUTH_USER_DETAILS_SUCCESS:
             localStorage.setItem('access', payload.access)
             return{
                 ...state,
@@ -59,25 +68,30 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 isAuthenticated: false
             }
-        case USER_LOADED_SUCCESS:
+        case AUTH_USER_LOADED_SUCCESS:
             return{
                 ...state,
                 user: payload
             }
 
-        case USER_LOADED_FAIL:
+        case AUTH_USER_LOADED_FAIL:
             return{
                 ...state,
                 user: null
             }
+        case AUTH_USER_DETAILS_FAIL:
+            return{
+                 ...state,
+                user: null
+            }        
         case USER_AUTHENTICATED_FAIL:
             return {
                 ...state,
                 user: null
             }
-        case USER_LOGIN_FAIL:
+        case AUTH_USER_LOGIN_FAIL:
         case SIGNUP_FAIL:
-        case USER_LOGOUT:
+        case AUTH_USER_LOGOUT:
             localStorage.removeItem('access')
             localStorage.removeItem('refresh')
             return{
