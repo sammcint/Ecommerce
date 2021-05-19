@@ -6,7 +6,7 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import FormContainer from '../components/FormContainer'
 import { getAuthUserDetails } from '../actions/authActions'
-import { updateUser } from '../actions/userActions'
+import { updateUser, getUserDetails } from '../actions/userActions'
 import { USER_UPDATE_RESET } from '../constants/userConstants'
 
 function EditUserScreen({ match, history }) {
@@ -19,12 +19,15 @@ function EditUserScreen({ match, history }) {
 
     const dispatch = useDispatch()
 
-    const authUserDetails = useSelector(state => state.authUserDetails)
-    const { error, loading, user } = authUserDetails
+    const userDetails = useSelector(state => state.userDetails)
+    const { error, loading, user } = userDetails
+
+    //const authUserDetails = useSelector(state => state.authUserDetails)
+    //const { error, loading, user } = authUserDetails
 
     const userUpdate = useSelector(state => state.userUpdate)
     const { error: errorUpdate, loading: loadingUpdate, success: successUpdate } = userUpdate
-
+    console.log(99, user)
     useEffect(() => {
 
         if(successUpdate){
@@ -34,7 +37,8 @@ function EditUserScreen({ match, history }) {
         } else {
 
             if(!user.name || user._id !== Number(userId)){
-                dispatch(getAuthUserDetails(userId))
+                //dispatch(getAuthUserDetails(userId))
+                dispatch(getUserDetails(userId))
             } else {
                 setName(user.name)
                 setEmail(user.email)
@@ -47,8 +51,8 @@ function EditUserScreen({ match, history }) {
 
     const submitHandler = (e) => {
         e.preventDefault()
+        //dispatch(updateUser({_id: user._id, name, email, isAdmin}))
         dispatch(updateUser({_id: user._id, name, email, isAdmin}))
-
     }
 
     return (

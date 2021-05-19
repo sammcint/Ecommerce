@@ -23,6 +23,8 @@ function LoginScreen({location, history}) {
     const {  authUserInfo } = authUserLogin
       
     useEffect(() => {
+        console.log(100, userInfo)
+        console.log(101, authUserInfo)
         if (userInfo || authUserInfo){
             history.push(redirect)
         }

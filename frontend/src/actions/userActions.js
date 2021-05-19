@@ -311,7 +311,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
                  'Authorization': `Bearer ${accessToken}`
              }
          }
-
+        console.log(98, user)
         const { data } = await axios.put(
             `${process.env.REACT_APP_API_URL}/api/users/update/${user._id}/`,
             user,

@@ -100,8 +100,9 @@ def updateUser(request, pk):
 
     data = request.data
 
-    user.first_name = data['name']
-    user.username = data['username']
+   # user.first_name = data['name']
+    user.name = data['name']
+    #user.username = data['username']
     user.email = data['email']
     user.is_staff = data['isAdmin']
 
