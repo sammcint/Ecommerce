@@ -31,7 +31,9 @@ const initialState = {
     access: localStorage.getItem('access'),
     refresh: localStorage.getItem('refresh'),
     isAuthenticated: null,
-    user: null
+    user:null,
+    authUser: null,
+    authUserInfo: null
 }
 
 
@@ -47,12 +49,15 @@ export const authReducer = (state = initialState, action) => {
            // return { loading:true }
         case AUTH_USER_LOGIN_SUCCESS:
             localStorage.setItem('access', payload.access)
+            
             return{
                 ...state,
                 isAuthenticated: true,
                 access: payload.access,
                 refresh: payload.refresh,
-                user: payload.data
+                user: payload.data,
+                authUser: payload.data,
+                authUserInfo: action.payload 
             }
         case AUTH_USER_DETAILS_SUCCESS:
             localStorage.setItem('access', payload.access)
@@ -61,7 +66,9 @@ export const authReducer = (state = initialState, action) => {
                 isAuthenticated: true,
                 access: payload.access,
                 refresh: payload.refresh,
-                user: payload.data
+                user: payload.data,
+                authUuser: payload.data,
+                authUserInfo: action.payload 
             }
         case SIGNUP_SUCCESS:
             return {
@@ -94,12 +101,17 @@ export const authReducer = (state = initialState, action) => {
         case AUTH_USER_LOGOUT:
             localStorage.removeItem('access')
             localStorage.removeItem('refresh')
+            localStorage.removeItem('authUser')
+            localStorage.removeItem('authUserInfo')
+
             return{
                 ...state,
                 access:null,
                 refresh:null,
                 isAuthenticated: false,
-                user: null
+                user: null,
+                authUser: null,
+                authUserInfo: null
             }
         case PASSWORD_RESET_SUCCESS:
         case PASSWORD_RESET_FAIL:

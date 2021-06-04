@@ -28,7 +28,8 @@ function LoginScreen({location, history}) {
         if (userInfo || authUserInfo){
             history.push(redirect)
         }
-    }, [history, userInfo, authUserInfo, redirect])
+        ///else return <Redirect to='/' />
+    }, [history, userInfo, authUserInfo, redirect]) //
 
     const submitHandler = (e) => {
         e.preventDefault()

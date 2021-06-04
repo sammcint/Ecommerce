@@ -15,6 +15,7 @@ import {
     AUTH_USER_DETAILS_REQUEST,
     AUTH_USER_DETAILS_SUCCESS,
     AUTH_USER_DETAILS_FAIL, 
+    AUTH_USER_DETAILS_RESET,
 
     USER_AUTHENTICATED_SUCCESS,
     USER_AUTHENTICATED_FAIL,
@@ -23,6 +24,8 @@ import {
     PASSWORD_RESET_FAIL,
     PASSWORD_RESET_CONFIRM_SUCCESS,
     PASSWORD_RESET_CONFIRM_FAIL,
+
+
 
     AUTH_USER_LOGOUT
 } 
@@ -275,9 +278,9 @@ the log out is coming from useractions but i lost my user profile once i got rid
 */
 export const authLogout = () => dispatch => {
     localStorage.removeItem('authUserInfo')
-    dispatch({
-        type: AUTH_USER_LOGOUT
-    })
+        dispatch({ type: AUTH_USER_LOGOUT })
+        dispatch({ type: AUTH_USER_DETAILS_RESET })
+   
 }
 
 

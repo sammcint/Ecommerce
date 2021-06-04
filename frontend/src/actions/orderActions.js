@@ -75,7 +75,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
 
 
          const accessToken = localStorage.getItem('access')
-         console.log(23, accessToken)
+         console.log(37, accessToken)
          const config = {
              headers:{
                  'Content-type': 'application/json',
@@ -113,7 +113,7 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
 
 
          const accessToken = localStorage.getItem('access')
-         console.log(23, accessToken)
+         console.log(37, accessToken)
          const config = {
              headers:{
                  'Content-type': 'application/json',
@@ -151,7 +151,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
 
 
          const accessToken = localStorage.getItem('access')
-         console.log(23, accessToken)
+         console.log(37, accessToken)
          const config = {
              headers:{
                  'Content-type': 'application/json',
